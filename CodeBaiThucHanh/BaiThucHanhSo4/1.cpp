@@ -1,34 +1,14 @@
 #include<bits/stdc++.h>
 using namespace std;
-void swap(int &x, int &y)
-{
-    int temp = x;
-    x = y;
-    y = temp;
-}
 // Hàm sắp xếp bubble sort
-void bubbleSort(int arr[], int n)
-{
-    int i, j;
-    bool haveSwap = false;
-    for (i = 0; i < n - 1; i++)
-    {
-        // i phần tử cuối cùng đã được sắp xếp
-        haveSwap = false;
-        for (j = 0; j < n - i - 1; j++)
-        {
-            if (arr[j] > arr[j + 1])
-            {
-                swap(arr[j], arr[j + 1]);
-                haveSwap = true; // Kiểm tra lần lặp này có swap không
+void bubbleSort(int arr[], int n){
+    for(int i = 0; i < n - 1; i++)
+        for(int j = n - 1; j > i; j--)
+            if(arr[j - 1] < arr[j]){
+                int temp = arr[j - 1];
+                arr[j-1] = arr[j];
+                arr[j] = temp;
             }
-        }
-        // Nếu không có swap nào được thực hiện => mảng đã sắp xếp. Không cần lặp thêm
-        if(haveSwap == false)
-        {
-            break;
-        }
-    }
 }
 /* Hàm xuất mảng */
 void printArray(int arr[], int size)

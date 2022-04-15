@@ -17,7 +17,7 @@ void selectionSort(int arr[], int n)
         // Tìm phần tử nhỏ nhất trong mảng chưa sắp xếp
         min_idx = i;
         for (j = i + 1; j < n; j++)
-            if (arr[j] < arr[min_idx])
+            if (arr[j] > arr[min_idx])
                 min_idx = j;
 
         // Đổi chỗ phần tử nhỏ nhất với phần tử đầu tiên
