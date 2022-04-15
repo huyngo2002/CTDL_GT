@@ -1,86 +1,82 @@
-#include<bits/stdc++.h>
+/*
+- Tạo một danh sách học sinh, mỗi học sinh gồm các thông tin: họ và tên, giới
+tính, năm sinh, điểm tổng kết.
+- Sử dụng một trong các thuật toán sắp xếp nổi bọt, lựa chọn hoặc chèn để sắp
+xếp danh sách theo tên với thứ tự từ điển.
+- Hiển thị danh sách được sắp xếp.
+*/
+#include <bits/stdc++.h>
 using namespace std;
-struct HocSinh
+class HocSinh
 {
-    char hoTen[30], gioiTinh[15];
+    string hoTen, gioiTinh;
     int namSinh;
-    double diemTK;
-
-    void nhap()
-    {
-        cout << "Nhap ho ten   : ";
-        fflush(stdin);
-        gets(hoTen);
-        cout << "Nhap gioi tinh: ";
-        fflush(stdin);
-        gets(gioiTinh);
-        cout << "Nhap nam sinh : ";
-        cin >> namSinh;
-        cout << "Nhap diem TK  : ";
-        cin >> diemTK;
-    }
-    void xuat()
-    {
-        cout << left << setw(20) << hoTen << setw(20) << gioiTinh << setw(15) << namSinh << setw(15) << diemTK << endl;
-    }
+    float diemTK;
+public:
+    void nhap();
+    void xuat();
+    friend void selectionSort(HocSinh *a, int n);
 };
-void bubbleSort(HocSinh *a, int n)
+void HocSinh::nhap()
 {
-    for(int i = 0; i < n - 1; i++)
-        for(int j = n - 1; j > i; j--)
-            if(stricmp(a[j - 1].hoTen, a[j].hoTen) > 0)
-            {
-                HocSinh temp = a[j - 1];
-                a[j - 1] = a[j];
-                a[j] = temp;
-            }
+    cin.ignore();
+    cout << "Nhap ho va ten: ";
+    getline(cin, hoTen);
+    cout << "Nhap gioi tinh: ";
+    getline(cin, gioiTinh);
+    cout << "Nhap nam sinh: ";
+    cin >> namSinh;
+    cout << "Nhap diem tong ket: ";
+    cin >> diemTK;
 }
-void insertionSort(HocSinh *a, int n)
+void HocSinh::xuat()
 {
-    for(int i = 1; i<n; i++)
+    cout << setw(30) << hoTen << setw(20) << gioiTinh << setw(20) << namSinh << setw(20) << diemTK << endl;
+}
+string tachTen(string s)
+{
+    string res = "";
+    for (int i = s.size() - 1; i >= 0; i--)
     {
-        HocSinh temp = a[i];
-        int j = i - 1;
-        while(j >= 0 && stricmp(temp.hoTen, a[j].hoTen) < 0)
-        {
-            a[j + 1] = a[j];
-            j--;
-        }
-        a[j + 1] = temp;
+        if(s[i] != ' ')
+            res += s[i];
+        else break;
     }
+    reverse(res.begin(), res.end());
+    return res;
 }
 void selectionSort(HocSinh *a, int n)
 {
     for(int i = 0; i < n - 1; i++)
     {
-        int m = i;
         for(int j = i + 1; j < n; j++)
         {
-            if(stricmp(a[j].hoTen, a[m].hoTen) < 0)
-                m = j;
+            if(tachTen(a[i].hoTen) > tachTen(a[j].hoTen))
+                swap(a[i], a[j]);
         }
-        HocSinh temp = a[m];
-        a[m] = a[i];
-        a[i] = temp;
     }
 }
-int main()
+int main ()
 {
     int n;
-    cout << "Nhap so hoc sinh: ";
-    cin >> n;
-    HocSinh *a = new HocSinh[n];
-    for(int i = 0; i < n; i++)
+    do
     {
-        cout << "Nhap thong tin hoc sinh thu: " << i + 1 << endl;
+        cout << "Nhap so luong hoc sinh: ";;
+        cin >> n;
+        if (n < 1)
+            cout << "Ban nhap sai. Moi nhap lai:\n";
+    }while(n < 1);
+    HocSinh *a = new HocSinh[n];
+    cout << "Nhap danh sach " << n << " hoc sinh:\n";
+    for (int i = 0; i  < n; i++)
+    {
+        cout << "Nhap thong tin hoc sinh thu " << i + 1 << ":\n";
         a[i].nhap();
     }
-    // bubbleSort(a, n);
-    // selectionSort(a, n);
-    insertionSort(a, n);
-    for(int i = 0; i < n; i++)
-    {
+    selectionSort(a, n);
+    cout << "Danh sach hoc sinh sau khi sap xep:\n";
+    cout << setw(30) << "Ho Ten" << setw(20) << "Gioi Tinh" << setw(20) << "Nam Sinh" << setw(20) << "Diem TK" << endl;
+    for (int i = 0; i < n; i++)
         a[i].xuat();
-    }
     return 0;
 }
