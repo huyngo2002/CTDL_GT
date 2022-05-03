@@ -5,8 +5,8 @@ struct DoVat {
 };
 void sort(DoVat a[], int n) {
 	for (int i = 0; i < n; i++)
-		for (int j = 0; j < n; j++)
-			if (a[i].donGia > a[j].donGia)
+		for (int j = i + 1; j < n; j++)
+			if (a[i].donGia < a[j].donGia)
 				swap(a[i], a[j]);
 }
 void nhap(DoVat a[], int &n, int &w) {
